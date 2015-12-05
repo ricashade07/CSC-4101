@@ -47,7 +47,8 @@
 ;;=
 (define (= . l)
   (if (null? l) 0
-    (b= (car l) (apply = (cdr l)))))
+    (b= (car l)
+    (apply = (cdr l)))))
 ;;<
 (define (< . l)
   (if (null? l) 0
@@ -85,23 +86,17 @@
 ;;odd?
 (define odd?
   (lambda (x)
-    (cond 
-      ((= x 0) #f)
+    (cond ((= x 0) #f)
       ((= x 1) #t)
-      ((positive? x)
-      (odd? (- x 2)))
-      ((negative? x) 
-      (odd? (+ x 2))))))
+      ((positive? x) (odd? (- x 2)))
+      ((negative? x) (odd? (+ x 2))))))
 ;;even?
 (define even?
   (lambda (x)
-    (cond
-      ((= x 0) #t)
+    (cond ((= x 0) #t)
       ((= x 1) #f)
-      ((positive? x) 
-      (even? (- x 2)))
-      ((negative? x)
-      (even? (+ x 2))))))
+      ((positive? x) (even? (- x 2)))
+      ((negative? x) (even? (+ x 2))))))
       
 ;;n-ary arithmetic ops
 ;;max
@@ -261,7 +256,7 @@
     (map ele (cdr lis))))))
 ;;for-each
 (define (for-each1 ele lis)
-   (cond ((null? (cdr lis))
+   (cond ((null? (cdr lis)) ; one elemnent list
     (ele (car lis)))
    (else
     (ele (car lis))
