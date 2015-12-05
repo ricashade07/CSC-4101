@@ -1,88 +1,88 @@
-;builtin functions
-(define builtin+ +)
+;;builtin functions
+(define builtin-+ +)
 (define (b+ x y) (builtin+ x y))
 (define + "Not implemented.")
 
-(define builtin- -)
+(define builtin-- -)
 (define (b- x y) (builtin- x y))
 (define - "Not implemented.")
 
-(define builtin* *)
+(define builtin-* *)
 (define (b* x y) (builtin* x y))
 (define * "Not implemented.")
 
-(define builtin/ /)
+(define builtin-/ /)
 (define (b/ x y) (builtin/ x y))
 (define / "Not implemented.")
 
-(define builtin= =)
+(define builtin-= =)
 (define (b= x y) (builtin= x y))
 (define = "Not implemented.")
 
-(define builtin< <)
+(define builtin-< <)
 (define (b< x y) (builtin< x y))
 (define < "Not implemented.")
 
-(define builtin> >)
+(define builtin-> >)
 (define (b> x y) (builtin> x y))
 (define > "Not implemented.")
 
-;comparison ops
-;eqv?
+;;comparison ops
+;;eqv?
 (define eqv?
   (lambda (x y)
     (if (and (number? x) (number? y))
-      (= x y) (eq? x y))))
-;equal
+      (= x y) 
+      (eq? x y))))
+;;equal
 (define (equal? a b)
-  (cond ((eqv? a b) #t)
-  ((and (pair? a)
+  (cond ((eqv? a b)#t)
+    ((and (pair? a)
     (pair? b)
     (equal? (car a) (car b))
     (equal? (cdr a) (cdr b))) #t)
-  (else  #f)))
+    (else #f)))
 
-;n-ary integer comparision ops
-;=
+;;n-ary integer comparision ops
+;;=
 (define (= . l)
   (if (null? l) 0
     (b= (car l) (apply = (cdr l)))))
-;<
+;;<
 (define (< . l)
   (if (null? l) 0
     (b> (car l)
     (apply < (cdr l)))))
-;>
+;;>
 (define (> . l)
   (if (null? l) 0
     (b> (car l) 
     (apply > (cdr l)))))
-;<=
+;;<=
 (define (<= . l)
   (if (null? l) 0
     (b< (car l) 
     (apply <= (cdr l)))))
-;>=
+;;>=
 (define (>= . l)
   (if (null? l) 0
     (b< (car l)
     (apply >= (cdr l)))))
 
-;test predicates
-
-;zero?
+;;test predicates
+;;zero?
 (define zero?
   (lambda (x)
     (if (= x 0) #t #f)))
-;positive?
+;;positive?
 (define positive?
   (lambda (x)
     (if (> x 0) #t #f)))
-;negative?
+;;negative?
 (define negative?
   (lambda (x)
     (if (< x 0) #t #f)))
-;odd?
+;;odd?
 (define odd?
   (lambda (x)
     (cond 
@@ -92,7 +92,7 @@
       (odd? (- x 2)))
       ((negative? x) 
       (odd? (+ x 2))))))
-;even?
+;;even?
 (define even?
   (lambda (x)
     (cond
@@ -103,8 +103,8 @@
       ((negative? x)
       (even? (+ x 2))))))
       
-;n-ary arithmetic ops
-;max
+;;n-ary arithmetic ops
+;;max
 (define (max . l)
   (if (= (length l) 1)
     (car l)
@@ -113,7 +113,7 @@
       (if (> (car l) (apply max (cdr l)))
         (car l)
         (apply max (cdr l))))))
-;min
+;;min
 (define (min . l)
   (if (= (length l) 1)
     (car l)
@@ -122,42 +122,42 @@
       (if (< (car l) (apply min (cdr l)))
         (car l) 
         (apply min (cdr l))))))
-;+
+;;+
 (define (+ . l)
   (if (null? l) 0
     (b+ (car l)
     (apply + (cdr l)))))
-;-
+;;-
 (define (- . l)
   (if (null? l) 0
     (b- (car l)
     (apply + (cdr l)))))
-;*
+;;*
 (define (* . l)
   (if (null? l) 1
     (b* (car l)
     (apply * (cdr l)))))
     
-;boolean ops
-;not
+;;boolean ops
+;;not
 (define not
   (lambda (x)
     (cond (x #f)
     (else #t))))
-;and
+;;and
 (define and
   (lambda (x y)
     (cond (x (cond (y #t)
       (else #f))) 
     (else #f))))
-;or
+;;or
 (define or
   (lambda (x y)
     (cond (x (cond (y #t)
       (else #t)))
     (else #f))))
 
-;list functions(define caar (lambda (x) (car (car x))))
+;;list functions(define caar (lambda (x) (car (car x))))
 (define cadr (lambda (x) (car (cdr x))))
 (define cdar (lambda (x) (cdr (car x))))
 (define cddr (lambda (x) (cdr (cdr x))))
@@ -185,65 +185,65 @@
 (define cddadr (lambda (x) (cdr (cdr (car (cdr x))))))
 (define cdddar (lambda (x) (cdr (cdr (cdr (car x))))))
 (define cddddr (lambda (x) (cdr (cdr (cdr (cdr x))))))
-;List
+;;List
 (define (list . l)
   (if (null? l)
     '()
     l))
-;Length
+;;Length
 (define (length x)
  (cond ((null? x) 0)
   ((+ 1 (length (cdr x))))))
-;Append
+;;Append
 (define (append list1 list2)
  (cond ((null? list2) list1)
  (cond ((null? list1) list2)
    ((cons (car list1)
      (append (cdr list1) list2)))))
-;Reverse
+;;Reverse
 (define (reverse lis)
  (if (null? lis)
    '()
    (append (reverse (cdr lis))
      (list (car lis)))))
      
-;set and association list ops
-;memq
+;;set and association list ops
+;;memq
 (define (memq ele lis)
  (if (null? lis)
    #f
    (if (eq? (car lis) ele)
      lis
      (memq ele (cdr lis)))))
-;memv
+;;memv
 (define (memv ele lis)
  (if (null? lis)
    #f
    (if (eqv? (car lis) ele)
      lis
      (memv ele (cdr lis)))))
-;member
+;;member
 (define (member ele lis)
  (if (null? lis)
    #f
    (if (equal? (car lis) ele)
      lis
      (member ele (cdr lis)))))
-;assq
+;;assq
 (define (assq ele lis)
  (if (null? lis)
    #f
    (if (eq? (car (car lis)) ele)
      (car lis)
      (assq ele (cdr lis)))))
-;assv
+;;assv
 (define (assv ele lis)
  (if (null? lis)
    #f
    (if (eqv? (car (car lis)) ele)
      (car lis)
      (assv ele (cdr lis)))))
-;assoc
+;;assoc
 (define (assoc ele lis)
  (if (null? lis)
    #f
@@ -251,17 +251,17 @@
      (car lis)
      (assoc ele (cdr lis)))))
 
-;higher-order functions
-;map
+;;higher-order functions
+;;map
 (define (map ele lis)
  (cond ((null? lis)
   '())
  ((pair? lis)
   (cons (ele (car lis))
     (map ele (cdr lis))))))
-;for-each
+;;for-each
 (define (for-each1 ele lis)
-   (cond ((null? (cdr lis))  ; one-element list?
+   (cond ((null? (cdr lis))
     (ele (car lis)))
    (else
     (ele (car lis))
