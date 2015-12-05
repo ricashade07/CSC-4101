@@ -1,347 +1,44 @@
-;Builtins Redefinitions
-(define caar "error")
-(define (caar x) (car (car x)))
-(define cadr "error")
-(define (cadr x) (car (cdr x)))
-(define cdar "error")
-(define (cdar x) (cdr (car x)))
-(define cddr "error")
-(define (cddr x) (cdr (cdr x)))
-(define cdadr "error")
-(define (cdadr x) (cdr (car (cdr x))))
-(define cdaar "error")
-(define (cdaar x) (cdr (car (car x))))
-(define cdddr "error")
-(define (cdddr x) (cdr (cdr (cdr x))))
-(define cddar "error")
-(define (cddar x) (cdr (cdr (car x))))
-(define caadr "error")
-(define (caadr x) (car (car (cdr x))))
-(define caaar "error")
-(define (caaar x) (car (car (car x))))
-(define caddr "error")
-(define (caddr x) (car (cdr (cdr x))))
-(define cadar "error")
-(define (cadar x) (car (cdr (car x))))
-(define caaaar "error")
-(define (caaaar x) (car (car (car (car x)))))
-(define caaadr "error")
-(define (caaadr x) (car (car (car (cdr x)))))
-(define caadar "error")
-(define (caadar x) (car (car (cdr (car x)))))
-(define caaddr "error")
-(define (caaddr x) (car (car (cdr (cdr x)))))
-(define cadaar "error")
-(define (cadaar x) (car (cdr (car (car x)))))
-(define cadadr "error")
-(define (cadadr x) (car (cdr (car (cdr x)))))
-(define caddar "error")
-(define (caddar x) (car (cdr (cdr (car x)))))
-(define cadddr "error")
-(define (cadddr x) (car (cdr (cdr (cdr x)))))
-(define cdaaar "error")
-(define (cdaaar x) (cdr (car (car (car x)))))
-(define cdaadr "error")
-(define (cdaadr x) (cdr (car (car (cdr x)))))
-(define cdadar "error")
-(define (cdadar x) (cdr (car (cdr (car x)))))
-(define cdaddr "error")
-(define (cdaddr x) (cdr (car (cdr (cdr x)))))
-(define cddaar "error")
-(define (cddaar x) (cdr (cdr (car (car x)))))
-(define cddadr "error")
-(define (cddadr x) (cdr (cdr (car (cdr x)))))
-(define cdddar "error")
-(define (cdddar x) (cdr (cdr (cdr (car x)))))
-(define cddddr "error")
-(define (cddddr x) (cdr (cdr (cdr (cdr x)))))
-
-;list 
-(define list "error")
-(define (list . x) x)
-
-;built in arithmatic binar
+;builtin functions
 (define builtin+ +)
 (define (b+ x y) (builtin+ x y))
-(define + "undefined")
-
-(define builtin* *)
-(define (b* x y) (builtin* x y))
-(define * "undefined")
+(define + "Not implemented.")
 
 (define builtin- -)
 (define (b- x y) (builtin- x y))
-(define - "undefined")
+(define - "Not implemented.")
+
+(define builtin* *)
+(define (b* x y) (builtin* x y))
+(define * "Not implemented.")
 
 (define builtin/ /)
 (define (b/ x y) (builtin/ x y))
-(define / "undefined")
+(define / "Not implemented.")
 
 (define builtin= =)
 (define (b= x y) (builtin= x y))
-(define = "undefined")
+(define = "Not implemented.")
 
 (define builtin< <)
 (define (b< x y) (builtin< x y))
-(define < "undefined")
+(define < "Not implemented.")
 
 (define builtin> >)
 (define (b> x y) (builtin> x y))
-(define > "undefined")
+(define > "Not implemented.")
 
-;N-Ary Arithmatic Definitions
-(define (+ . l) 
- 	(if (null? l) 0 
- 	(b+ (car l) (apply + (cdr l)))
- 	)
-)
-(define (- . l)
-  	(if (null? l) 0 
- 	(b- (car l) (apply - (cdr l)))
- 	)
-)
+;comparison ops
 
-(define (* . l) 
-	(if (null? l) 1 
-	(b* (car l) (apply * (cdr l)))
-	)
-)
-
-(define (= . l) 
- 	(if (null? l) 0 
- 	(b= (car l) (apply = (cdr l)))
- 	)
-)
-
-(define (> . fList)
-    (cond
-      ((null? fList) #t)
-      ((null? (cdr fList)) #t)
-      ((if (b> (car fList) (cadr fList))
-         (apply >(cdr fList)) #f)
-      )
-    )
-)
-
-(define (< . fList)
-    (cond
-      ((null? fList) #t)
-      ((null? (cdr fList)) #t)
-      ((if (b< (car fList) (cadr fList))
-         (apply <(cdr fList)) #f)
-      )
-    )
-)
-
-(define length "error")
-(define (length l) 
-	(if (null? l) 0
-	(+ 1 (length( cdr l))))
-)
+;n-ary integer comparision ops
 
 ;test predicates
-(define zero? "error")
-(define (zero? x)
-	(if (b= x 0) #t #f)
-)
 
-(define positive? "error")
-(define (positive? x) 
-	(if (b> x 0) #t #f)
-)
+;n-ary arithmetic ops
 
-(define negative? "error")
-(define (negative? x) 
-	(if (b< x 0) #t #f)
-)
+;boolean ops
 
-(define (abs x) 
-	(cond ((negative? x) (- 0 x))
-		(else (x))
-	)
-)
+;list functions
 
-(define (odd? x) 
-	(if (= x 0) #f (even? (- (abs x) 1))))
-(define (even? x) 
-	(if (= x 0) #t (odd? (- (abs x) 1))))
+;set and association list ops
 
-
-(define map "error")
-(define (unary-map func fList)
-	(cond ((null? fList) '())
-		(else (cons (func (car fList))
-		(unary-map func (cdr fList))))
-	)
-)
-(define (map func . fList)
-  (cond ((null? (car fList)) '())
-      (else (cons (apply func (unary-map car fList))
-            (apply map func (unary-map cdr fList))))
-  )
-)
-
-(define for-each "error")
-(define (unary-for-each func fList)
-	(cond ((not (null? fList))
-		(begin (func (car fList))
-		(unary-for-each func (cdr fList))))
-	)
-)
-
-(define (for-each func . fList)
-  (cond ((not (null? (car fList)))
-      (begin (apply func (map car fList))
-            (apply for-each func (map cdr fList))))
-  )
-)
-
-(define for-all "error")
-(define (unary-for-all func fList)
-	(if (null? fList) #t
-		(if (func (car fList))
-			(unary-for-all func (cdr fList))
-			#f)
-	)
-)
-;boolean operations
-
-(define not "error")
-(define (not x) 
-	(if x #f #t)
-)
-
-(define and "error")
-(define (and? b) 
-	(cond ((null? l) #t)
-		(else (begin (eval (car l))  ))))
-;the n-ary integer comparison operations =, <, >, <=, >=;
-
-(define (= . l) 
-	(cond ((null? l)) "not enough arguments")
-		((null? (cdr l)) "not enough arguments")
-		((b= (car l) (=helper (cdr l))))
-)
-
-(define (eqv? . l)
-	(cond ((eq? l) #t) 
-	((unary-for-all number? l) 
-		(if unary-for-all ))))
-
-
-(define (max . l)
-  (if ( = (length l) 1)
-    (car l)
-    (if (null? l)
-      (write "not enough arguments")
-      (if (> (car l) (apply max (cdr l)))
-        (car l)
-        (apply max (cdr l))))))
-
-
-(define (min . l)
-	(if (null? (cdr l)) (car l)
-    	(if (null? l)
-	      	(write "not enough arguments")
-			(if (< (car l) (apply min (cdr l)))
-		    	(car l)
-		        (apply min (cdr l)))
-		)
-    )
-)
-
-(define (and . l)
-	(if (null? l) #t 
-		(if (not (car l)) #f
-			(if (null? (cdr l)) (car l)
-				(apply and (cdr l))
-			)
-		)
-	)
-)
-(define (or . l)
-	(if (null? l) #f 
-		(if (null? (cdr l)) (car l)
-			(if (car l) (car l) 
-				(apply or (cdr l))
-			)
-		)
-	)
-)
-
-(define (listeq? fList) 
-	(if (null? fList) #t
-	(if (eq? (car fList) (listeq? (cdr fList))) #t #f))
-)
-
-(define (memq obj list) 
-	(cond 
-		((null? list) #f)
-		((eq? obj (car list)) list)
-		(else (memq obj (cdr list)))
-	)	
-)
-
-(define (memv obj list) 
-	(cond 
-		((null? list) #f)
-		((eqv? obj (car list)) list)
-		(else (memv obj (cdr list)))
-	)	
-)
-
-(define (member obj list) 
-	(cond 
-		((null? list) #f)
-		((equal? obj (car list)) list)
-		(else (member obj (cdr list)))
-	)	
-)
-
-(define (assq obj list)
-	(cond ((null? list) '())
-		((pair? (car list))
-			(cond 
-				((eq? obj (caar list)) (car list))
-				(else (assq obj (cdr list)))
-			)
-		)
-		(else "must be a list of pairs")
-	)
-)
-(define (assv obj list)
-	(cond ((null? list) '())
-		((pair? (car list))
-			(cond 
-				((eqv? obj (caar list)) (car list))
-				(else (assv obj (cdr list)))
-			)
-		)
-		(else "must be a list of pairs")
-	)
-)
-(define (assoc obj list)
-	(cond ((null? list) '())
-		((pair? (car list))
-			(cond 
-				((equal? obj (caar list)) (car list))
-				(else (assoc obj (cdr list)))
-			)
-		)
-		(else "must be a list of pairs")
-	)
-)
-(define (append . list)
-	(cond 
-		((null? list) '())		
-		(else 
-		(b-append (car list) (apply append (cdr list))))
-	)
-)
-(define (b-append list1 list2) 
-	(if (null? list2) list1
-		(if (null? list1) list2
-	  		(cons (car list1) (b-append (cdr list1) list2))
-		)
-	)
-)
+;higher-order functions
