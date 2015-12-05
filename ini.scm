@@ -244,7 +244,6 @@
      (car lis)
      (assv ele (cdr lis)))))
 ;assoc
-;assoc
 (define (assoc ele lis)
  (if (null? lis)
    #f
