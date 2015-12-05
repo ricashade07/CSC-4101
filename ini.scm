@@ -50,19 +50,23 @@
 ;<
 (define (< . l)
   (if (null? l) 0
-    (b> (car l) (apply < (cdr l)))))
+    (b> (car l)
+    (apply < (cdr l)))))
 ;>
 (define (> . l)
   (if (null? l) 0
-    (b> (car l) (apply > (cdr l)))))
+    (b> (car l) 
+    (apply > (cdr l)))))
 ;<=
 (define (<= . l)
   (if (null? l) 0
-    (b< (car l) (apply <= (cdr l)))))
+    (b< (car l) 
+    (apply <= (cdr l)))))
 ;>=
 (define (>= . l)
   (if (null? l) 0
-    (b< (car l) (apply >= (cdr l)))))
+    (b< (car l)
+    (apply >= (cdr l)))))
 
 ;test predicates
 
@@ -84,16 +88,20 @@
     (cond 
       ((= x 0) #f)
       ((= x 1) #t)
-      ((positive? x) (odd? (- x 2)))
-      ((negative? x) (odd? (+ x 2))))))
+      ((positive? x)
+      (odd? (- x 2)))
+      ((negative? x) 
+      (odd? (+ x 2))))))
 ;even?
 (define even?
   (lambda (x)
     (cond
       ((= x 0) #t)
       ((= x 1) #f)
-      ((positive? x) (even? (- x 2)))
-      ((negative? x) (even? (+ x 2))))))
+      ((positive? x) 
+      (even? (- x 2)))
+      ((negative? x)
+      (even? (+ x 2))))))
       
 ;n-ary arithmetic ops
 ;max
@@ -117,15 +125,18 @@
 ;+
 (define (+ . l)
   (if (null? l) 0
-    (b+ (car l) (apply + (cdr l)))))
+    (b+ (car l)
+    (apply + (cdr l)))))
 ;-
 (define (- . l)
   (if (null? l) 0
-    (b- (car l) (apply + (cdr l)))))
+    (b- (car l)
+    (apply + (cdr l)))))
 ;*
 (define (* . l)
   (if (null? l) 1
-    (b* (car l) (apply * (cdr l)))))
+    (b* (car l)
+    (apply * (cdr l)))))
     
 ;boolean ops
 ;not
