@@ -1,3 +1,4 @@
 # CSC-4101
-;Abraham Wilson
-;prog3 ini.scm
+Abraham Wilson 
+CS410187
+prog3 ini.scm
