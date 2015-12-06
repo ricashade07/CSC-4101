@@ -163,7 +163,6 @@
 ;;Append
 (define (append list1 list2)
  (cond ((null? list2) list1)
- (cond ((null? list1) list2)
    ((cons (car list1)
      (append (cdr list1) list2))))))
 ;;Reverse
