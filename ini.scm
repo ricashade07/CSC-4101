@@ -1,32 +1,3 @@
-;;builtin functions
-(define builtin-+ +)
-(define (b+ x y) (builtin+ x y))
-(define + "Not implemented.")
-
-(define builtin-- -)
-(define (b- x y) (builtin- x y))
-(define - "Not implemented.")
-
-(define builtin-* *)
-(define (b* x y) (builtin* x y))
-(define * "Not implemented.")
-
-(define builtin-/ /)
-(define (b/ x y) (builtin/ x y))
-(define / "Not implemented.")
-
-(define builtin-= =)
-(define (b= x y) (builtin= x y))
-(define = "Not implemented.")
-
-(define builtin-< <)
-(define (b< x y) (builtin< x y))
-(define < "Not implemented.")
-
-(define builtin-> >)
-(define (b> x y) (builtin> x y))
-(define > "Not implemented.")
-
 ;;comparison ops
 ;;eqv?
 (define eqv?
